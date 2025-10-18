@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AndreiWeb.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AndreiWeb.Controllers;
 
 public class CategoryController : Controller
 {
     // GET
+    private readonly ApplicationDbContext _db;
+    public CategoryController(ApplicationDbContext db)
+    {
+
+        _db = db;
+    }
+    
     public IActionResult Index()
     {
-        return View();
+        var objCategoryList = _db.Categories.ToList();
+        return View(objCategoryList);
     }
 }
