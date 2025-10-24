@@ -37,6 +37,7 @@ public class CategoryController : Controller
         {
             _db.Categories.Add(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category Created Successfully";
             return RedirectToAction("Index", "Category");
         }
 
@@ -62,18 +63,45 @@ public class CategoryController : Controller
     [HttpPost]
     public IActionResult Edit(Category obj)
     {
-        if (obj.Name == obj.DisplayOrder.ToString())
-        {
-            ModelState.AddModelError("name", "The DisplayOrder cannot exactly Match the Name");
-        }
-
         if (ModelState.IsValid)
         {
-            _db.Categories.Add(obj);
+            _db.Categories.Update(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category Updated Successfully";
             return RedirectToAction("Index", "Category");
         }
 
         return View();
+    }
+
+    public IActionResult Delete(int? id)
+    {
+        if (id == null || id == 0)
+        {
+            return NotFound();
+        }
+
+        Category? categoryToEdit = _db.Categories.FirstOrDefault(category => category.Id == id);
+        if (categoryToEdit == null)
+        {
+            return NotFound();
+        }
+
+        return View(categoryToEdit);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public IActionResult DeletePost(int? id)
+    {
+        Category? obj =_db.Categories.FirstOrDefault(category => category.Id == id);
+        if (obj == null)
+        {
+            return NotFound();
+        }
+
+        _db.Remove(obj);
+        _db.SaveChanges();
+            TempData["success"] = "Category Deleted Successfully";
+        return RedirectToAction("Index", "Category");
     }
 }
