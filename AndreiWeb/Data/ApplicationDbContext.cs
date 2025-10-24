@@ -21,6 +21,10 @@ public class ApplicationDbContext: DbContext
          new Category{Id = 2, Name = "SciFi", DisplayOrder = 2},
          new Category{Id = 3, Name = "History", DisplayOrder = 3}
             );
+        
+        
+        
+        
         modelBuilder.Entity<Roles>()
             .Property(r => r.Name)
             .HasConversion<string>();
