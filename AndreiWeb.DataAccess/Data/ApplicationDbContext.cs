@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
-namespace AndreiWeb.Data;
+namespace AndreiWeb.DataAccess.Data;
 
 public class ApplicationDbContext: DbContext
 {
