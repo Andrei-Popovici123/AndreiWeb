@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreiWeb", "AndreiWeb\AndreiWeb.csproj", "{6B642331-3549-4BB0-9988-452B4E5C6065}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreiWeb.DataAccess", "AndreiWeb.DataAccess\AndreiWeb.DataAccess.csproj", "{CD4B2202-3D6D-48A7-AC81-CF89855EB1E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreiWeb.Models", "AndreiWeb.Models\AndreiWeb.Models.csproj", "{68401DBA-4E22-447D-821B-3B44C5CB3FD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreiWeb.Utility", "AndreiWeb.Utility\AndreiWeb.Utility.csproj", "{4EADCD81-3411-4241-AA3A-0052A6B1C23C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{6B642331-3549-4BB0-9988-452B4E5C6065}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B642331-3549-4BB0-9988-452B4E5C6065}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B642331-3549-4BB0-9988-452B4E5C6065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD4B2202-3D6D-48A7-AC81-CF89855EB1E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD4B2202-3D6D-48A7-AC81-CF89855EB1E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD4B2202-3D6D-48A7-AC81-CF89855EB1E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD4B2202-3D6D-48A7-AC81-CF89855EB1E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68401DBA-4E22-447D-821B-3B44C5CB3FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68401DBA-4E22-447D-821B-3B44C5CB3FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68401DBA-4E22-447D-821B-3B44C5CB3FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68401DBA-4E22-447D-821B-3B44C5CB3FD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EADCD81-3411-4241-AA3A-0052A6B1C23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EADCD81-3411-4241-AA3A-0052A6B1C23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EADCD81-3411-4241-AA3A-0052A6B1C23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EADCD81-3411-4241-AA3A-0052A6B1C23C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
