@@ -1,4 +1,5 @@
 ﻿using AndreiWeb.DataAccess.Data;
+using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,16 +8,16 @@ namespace AndreiWeb.Controllers;
 public class CategoryController : Controller
 {
     // GET
-    private readonly ApplicationDbContext _db;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public CategoryController(ApplicationDbContext db)
+    public CategoryController(ICategoryRepository categoryRepository)
     {
-        _db = db;
+        _categoryRepository = categoryRepository;
     }
 
     public IActionResult Index()
     {
-        var objCategoryList = _db.Categories.ToList();
+        var objCategoryList = _categoryRepository.GetAll();
         return View(objCategoryList);
     }
 
@@ -35,8 +36,8 @@ public class CategoryController : Controller
 
         if (ModelState.IsValid)
         {
-            _db.Categories.Add(obj);
-            _db.SaveChanges();
+            _categoryRepository.Add(obj);
+            _categoryRepository.Save();
             TempData["success"] = "Category Created Successfully";
             return RedirectToAction("Index", "Category");
         }
@@ -51,7 +52,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        Category? categoryToEdit = _db.Categories.FirstOrDefault(category => category.Id == Id);
+        Category? categoryToEdit = _categoryRepository.Get(u => u.Id == Id);
         if (categoryToEdit == null)
         {
             return NotFound();
@@ -65,8 +66,8 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            _db.Categories.Update(obj);
-            _db.SaveChanges();
+            _categoryRepository.Update(obj);
+            _categoryRepository.Save();
             TempData["success"] = "Category Updated Successfully";
             return RedirectToAction("Index", "Category");
         }
@@ -81,7 +82,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        Category? categoryToEdit = _db.Categories.FirstOrDefault(category => category.Id == id);
+        Category? categoryToEdit = _categoryRepository.Get(category => category.Id == id);
         if (categoryToEdit == null)
         {
             return NotFound();
@@ -93,14 +94,14 @@ public class CategoryController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeletePost(int? id)
     {
-        Category? obj =_db.Categories.FirstOrDefault(category => category.Id == id);
+        Category? obj = _categoryRepository.Get(category => category.Id == id);
         if (obj == null)
         {
             return NotFound();
         }
 
-        _db.Remove(obj);
-        _db.SaveChanges();
+        _categoryRepository.Remove(obj);
+        _categoryRepository.Save();
             TempData["success"] = "Category Deleted Successfully";
         return RedirectToAction("Index", "Category");
     }

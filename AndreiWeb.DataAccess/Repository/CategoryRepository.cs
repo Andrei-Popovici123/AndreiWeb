@@ -11,7 +11,7 @@ public class CategoryRepository :  Repository<Category>, ICategoryRepository
 
     public CategoryRepository(ApplicationDbContext db) : base(db)
     {
-        _db = _db;
+        _db = db;
     }
 
     public void Update(Category category)
