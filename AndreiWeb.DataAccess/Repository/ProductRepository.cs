@@ -6,11 +6,11 @@ namespace AndreiWeb.DataAccess.Repository;
 
 public class ProductRepository : Repository<Product>, IProductRepository
 {
-    private ApplicationDbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext;
 
-    public ProductRepository(ApplicationDbContext context): base(context)
+    public ProductRepository(ApplicationDbContext db): base(db)
     {
-        _dbContext = context;
+        _dbContext = db;
     }
 
 
