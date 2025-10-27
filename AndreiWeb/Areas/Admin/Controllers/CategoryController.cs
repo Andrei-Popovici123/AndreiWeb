@@ -1,13 +1,11 @@
-﻿using AndreiWeb.DataAccess.Data;
-using AndreiWeb.DataAccess.Repository.IRepository;
+﻿using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AndreiWeb.Controllers;
-
+namespace AndreiWeb.Areas.Admin.Controllers;
+[Area("Admin")]
 public class CategoryController : Controller
 {
-    // GET
     private readonly IUnitOfWork _unitOfWork;
 
     public CategoryController(IUnitOfWork unitOfWork)

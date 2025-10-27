@@ -1,8 +1,9 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using AndreiWeb.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace AndreiWeb.Controllers;
+namespace AndreiWeb.Areas.Customer.Controllers;
+[Area("Customer")]
 
 public class HomeController : Controller
 {
