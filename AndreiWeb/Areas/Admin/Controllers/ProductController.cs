@@ -77,7 +77,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    IActionResult Edit(Product product)
+    public IActionResult Edit(Product product)
     {
         if (ModelState.IsValid)
         {
