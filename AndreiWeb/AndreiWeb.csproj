@@ -25,6 +25,13 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Roles\ListRoles.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Roles\ListRoles.cshtml" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="wwwroot\images\product\" />
     </ItemGroup>
 
 </Project>
