@@ -2,8 +2,10 @@
 using AndreiWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AndreiWeb.Areas.Admin.Controllers;
+
 [Area("Admin")]
 public class ProductController : Controller
 {
@@ -16,18 +18,24 @@ public class ProductController : Controller
 
     public IActionResult Index()
     {
-        return View(_unitOfWork.Product.GetAll());
+
+        return View(_unitOfWork.Product.GetAll().ToList());
     }
 
     public IActionResult Create()
     {
+        IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+        {
+            Text = u.Name,
+            Value = u.Id.ToString(),
+        });
+        ViewBag.CategoryList = CategoryList;
         return View();
     }
 
     [HttpPost]
     public IActionResult Create(Product product)
     {
-
         if (ModelState.IsValid)
         {
             _unitOfWork.Product.Add(product);
@@ -74,25 +82,26 @@ public class ProductController : Controller
         }
 
         Product? product = _unitOfWork.Product.Get(product => product.Id == id);
-        if (product==null)
+        if (product == null)
         {
             return NotFound();
         }
-        
+
         return View(product);
-    }    
+    }
+
     [HttpPost, ActionName("Delete")]
     public IActionResult DeletePost(int? id)
     {
         Product? product = _unitOfWork.Product.Get(product => product.Id == id);
-        if (product==null)
+        if (product == null)
         {
             return NotFound();
         }
+
         _unitOfWork.Product.Remove(product);
         _unitOfWork.Save();
-            TempData["success"] = "Product Deleted successfully";
-        return RedirectToAction("Index","Product");
-    }    
-}   
- 
+        TempData["success"] = "Product Deleted successfully";
+        return RedirectToAction("Index", "Product");
+    }
+}
