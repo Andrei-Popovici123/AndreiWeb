@@ -1,5 +1,6 @@
 ﻿using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
+using AndreiWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,34 +19,44 @@ public class ProductController : Controller
 
     public IActionResult Index()
     {
-
         return View(_unitOfWork.Product.GetAll().ToList());
     }
 
     public IActionResult Create()
     {
-        IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+        // Create op is being processed with View Model Consisting of Product and Category List
+        ProductViewModel productViewModel = new()
         {
-            Text = u.Name,
-            Value = u.Id.ToString(),
-        });
-        ViewBag.CategoryList = CategoryList;
-        return View();
+            CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString(),
+            }),
+            Product = new Product(),
+        };
+        return View(productViewModel);
     }
 
     [HttpPost]
-    public IActionResult Create(Product product)
+    public IActionResult Create(ProductViewModel productViewModel)
     {
         if (ModelState.IsValid)
         {
-            _unitOfWork.Product.Add(product);
+            _unitOfWork.Product.Add(productViewModel.Product);
             _unitOfWork.Save();
             TempData["success"] = "New Product Added Succesfully";
             return RedirectToAction("Index", "Product");
         }
 
-        return View();
+        productViewModel.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+        {
+            Text = u.Name,
+            Value = u.Id.ToString(),
+        });
+
+        return View(productViewModel);
     }
+
 
     public IActionResult Edit(int? id)
     {
