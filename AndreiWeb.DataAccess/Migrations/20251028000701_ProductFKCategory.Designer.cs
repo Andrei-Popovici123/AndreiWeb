@@ -3,6 +3,7 @@ using AndreiWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AndreiWeb.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028000701_ProductFKCategory")]
+    partial class ProductFKCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,10 +80,6 @@ namespace AndreiWeb.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -117,7 +116,6 @@ namespace AndreiWeb.DataAccess.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ImageUrl = "",
                             Key = "SWD9999001",
                             ListPrice = 99.0,
                             Price = 90.0,
@@ -131,7 +129,6 @@ namespace AndreiWeb.DataAccess.Migrations
                             Id = 2,
                             CategoryId = 2,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ImageUrl = "",
                             Key = "CAW777777701",
                             ListPrice = 40.0,
                             Price = 30.0,
@@ -145,7 +142,6 @@ namespace AndreiWeb.DataAccess.Migrations
                             Id = 3,
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ImageUrl = "",
                             Key = "RITO5555501",
                             ListPrice = 55.0,
                             Price = 50.0,
@@ -159,7 +155,6 @@ namespace AndreiWeb.DataAccess.Migrations
                             Id = 4,
                             CategoryId = 3,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ImageUrl = "",
                             Key = "WS3333333301",
                             ListPrice = 70.0,
                             Price = 65.0,
@@ -173,7 +168,6 @@ namespace AndreiWeb.DataAccess.Migrations
                             Id = 5,
                             CategoryId = 2,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ImageUrl = "",
                             Key = "SOTJ1111111101",
                             ListPrice = 30.0,
                             Price = 27.0,
@@ -187,7 +181,6 @@ namespace AndreiWeb.DataAccess.Migrations
                             Id = 6,
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ImageUrl = "",
                             Key = "FOT000000001",
                             ListPrice = 25.0,
                             Price = 23.0,

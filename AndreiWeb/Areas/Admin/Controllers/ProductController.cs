@@ -27,30 +27,6 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult Create(Product product)
     {
-        if (product.Key.Length < 10)
-        {
-            ModelState.AddModelError("key", "The Key Must Be More Than 10 Characters");
-        }
-
-        if (product.Price < 0)
-        {
-            ModelState.AddModelError("Price", "Can't have a negative Price");
-        }
-
-        if (product.Price50 < 0)
-        {
-            ModelState.AddModelError("Price50", "Can't have a negative Price50");
-        }
-
-        if (product.Price100 < 0)
-        {
-            ModelState.AddModelError("Price100", "Can't have a negative Price100");
-        }
-
-        if (product.ListPrice < 0)
-        {
-            ModelState.AddModelError("ListPrice", "Can't have a negative ListPrice");
-        }
 
         if (ModelState.IsValid)
         {
