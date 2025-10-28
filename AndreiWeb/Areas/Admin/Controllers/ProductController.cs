@@ -12,6 +12,7 @@ public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IWebHostEnvironment _webHostEnvironment;
+
     public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
     {
         _unitOfWork = unitOfWork;
@@ -52,19 +53,33 @@ public class ProductController : Controller
         if (ModelState.IsValid)
         {
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            if (file!= null)
+            if (file != null)
             {
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 string productPath = Path.Combine(wwwRootPath, @"images\product");
+                if (!string.IsNullOrEmpty(productViewModel.Product.ImageUrl))
+                {
+                    //delete the old image
+                    var oldImagePath = Path.Combine(wwwRootPath, productViewModel.Product.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
 
-                using (var fileStream = new FileStream(Path.Combine(productPath, filename),FileMode.Create))
+                using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
 
                 productViewModel.Product.ImageUrl = @"\images\product\" + filename;
             }
-            _unitOfWork.Product.Add(productViewModel.Product);
+
+            if (productViewModel.Product.Id == 0)
+            {
+                _unitOfWork.Product.Add(productViewModel.Product);
+            }
+            _unitOfWork.Product.Update(productViewModel.Product);
             _unitOfWork.Save();
             TempData["success"] = "New Product Added Succesfully";
             return RedirectToAction("Index", "Product");
@@ -78,7 +93,7 @@ public class ProductController : Controller
 
         return View(productViewModel);
     }
-    
+
 
     public IActionResult Delete(int? id)
     {
