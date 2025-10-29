@@ -15,7 +15,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<Roles> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -119,15 +118,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
                 ImageUrl = ""
             }
         );
-
-
-        modelBuilder.Entity<Roles>()
-            .Property(r => r.Name)
-            .HasConversion<string>();
-        modelBuilder.Entity<Roles>().HasData(
-            new Roles { Id = 1, Name = RoleName.Admin },
-            new Roles { Id = 2, Name = RoleName.Customer },
-            new Roles { Id = 3, Name = RoleName.User }
-        );
+        
     }
 }
