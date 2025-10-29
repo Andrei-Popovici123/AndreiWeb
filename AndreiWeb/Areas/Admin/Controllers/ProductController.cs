@@ -21,7 +21,7 @@ public class ProductController : Controller
 
     public IActionResult Index()
     {
-        return View(_unitOfWork.Product.GetAll().ToList());
+        return View(_unitOfWork.Product.GetAll(includeProperties:"Category").ToList());
     }
 
     public IActionResult Upsert(int? id)
@@ -79,7 +79,11 @@ public class ProductController : Controller
             {
                 _unitOfWork.Product.Add(productViewModel.Product);
             }
-            _unitOfWork.Product.Update(productViewModel.Product);
+            else
+            {
+                _unitOfWork.Product.Update(productViewModel.Product);
+            }
+
             _unitOfWork.Save();
             TempData["success"] = "New Product Added Succesfully";
             return RedirectToAction("Index", "Product");
