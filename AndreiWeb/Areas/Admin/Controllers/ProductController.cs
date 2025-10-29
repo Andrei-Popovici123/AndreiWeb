@@ -1,6 +1,8 @@
 ﻿using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
 using AndreiWeb.Models.ViewModels;
+using AndreiWeb.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AndreiWeb.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = SD.Role_Admin)]
+
 public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;

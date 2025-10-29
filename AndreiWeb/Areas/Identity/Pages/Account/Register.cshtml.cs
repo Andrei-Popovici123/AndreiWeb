@@ -123,7 +123,7 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             Input = new()
             {
                 RoleList = _roleManager.Roles
-                    /*.Where(u=>u.Name!="Admin")*/
+                    // .Where(u=>u.Name!="Admin")
                     .Select(x => x.Name)
                     .Select(i => new SelectListItem
                 { // Here Admin role can be enabled or disabled From register Dropdown
@@ -151,7 +151,7 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if (String.IsNullOrEmpty(Input.Role))
+                    if (!String.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
                     }

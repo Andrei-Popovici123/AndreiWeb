@@ -1,9 +1,12 @@
 ﻿using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
+using AndreiWeb.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AndreiWeb.Areas.Admin.Controllers;
 [Area("Admin")]
+[Authorize(Roles = SD.Role_Admin)]
 public class CategoryController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
