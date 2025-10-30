@@ -26,6 +26,29 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
             new Category { Id = 3, Name = "History", DisplayOrder = 3 }
         );
+        modelBuilder.Entity<Company>().HasData(
+            new Company
+            {
+                Id = 1,
+                Name = "TechNova Solutions",
+                StreetAddress = "123 Innovation Drive",
+                City = "Seattle",
+                State = "WA",
+                PostalCode = "98101",
+                PhoneNumber = "206-555-0147"
+            },
+            new Company
+            {
+                Id = 2,
+                Name = "GreenWave Logistics",
+                StreetAddress = "58 Harbor Lane",
+                City = "San Francisco",
+                State = "CA",
+                PostalCode = "94105",
+                PhoneNumber = "415-555-0921"
+            }
+        );
+
 
         modelBuilder.Entity<Product>().HasData(
             new Product

@@ -30,4 +30,10 @@
       <_ContentIncludedByDefault Remove="Areas\Admin\Roles\ListRoles.cshtml" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Admin\Views\Company\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Company\Upsert.cshtml" />
+    </ItemGroup>
+
 </Project>
