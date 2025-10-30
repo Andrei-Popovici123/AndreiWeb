@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Product> Products { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Company> Companies { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -80,7 +81,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
                 Price100 = 20,
                 CategoryId = 2,
                 ImageUrl = ""
-                
             },
             new Product
             {
@@ -143,6 +143,5 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
                 ImageUrl = ""
             }
         );
-        
     }
 }
