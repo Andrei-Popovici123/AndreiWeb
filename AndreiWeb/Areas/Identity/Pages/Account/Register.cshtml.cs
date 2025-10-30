@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
 using System;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
 using AndreiWeb.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -34,13 +36,14 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
+            IEmailSender emailSender, RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -49,6 +52,7 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -90,7 +94,8 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -112,7 +117,8 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             public string? State { get; set; }
             public string? PostalCode { get; set; }
             public string? PhoneNumber { get; set; }
-            
+            public int? CompanyId { get; set; }
+            [ValidateNever] public IEnumerable<SelectListItem> CompanyList { get; set; }
         }
 
 
@@ -129,13 +135,22 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             Input = new()
             {
                 RoleList = _roleManager.Roles
-                    // .Where(u=>u.Name!="Admin")
+                    .Where(u => u.Name != "Admin")
                     .Select(x => x.Name)
                     .Select(i => new SelectListItem
-                { // Here Admin role can be enabled or disabled From register Dropdown
-                    Text = i,
-                    Value = i,
-                })
+                    {
+                        // Here Admin role can be enabled or disabled From register Dropdown
+                        Text = i,
+                        Value = i,
+                    }),
+                CompanyList = _unitOfWork.Company
+                    .GetAll()
+                    .Select(i => new SelectListItem
+                    {
+                        // Here Admin role can be enabled or disabled From register Dropdown
+                        Text = i.Name,
+                        Value = i.Id.ToString(),
+                    }),
             };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -158,6 +173,12 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
                 user.PostalCode = Input.PostalCode;
                 user.State = Input.State;
                 user.PhoneNumber = Input.PhoneNumber;
+
+                if (Input.Role == SD.Role_Company)
+                {
+                    user.CompanyId = Input.CompanyId;
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -185,7 +206,8 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation",
+                            new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
@@ -193,6 +215,7 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -212,8 +235,8 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             catch
             {
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                                                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                                                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
@@ -223,6 +246,7 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
+
             return (IUserEmailStore<IdentityUser>)_userStore;
         }
     }
