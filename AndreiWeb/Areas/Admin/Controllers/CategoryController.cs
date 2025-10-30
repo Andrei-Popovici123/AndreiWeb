@@ -1,4 +1,4 @@
-﻿using AndreiWeb.DataAccess.Repository.IRepository;
+using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
 using AndreiWeb.Utility;
 using Microsoft.AspNetCore.Authorization;

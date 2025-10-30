@@ -1,4 +1,4 @@
-using AndreiWeb.DataAccess.Repository.IRepository;
+﻿using AndreiWeb.DataAccess.Repository.IRepository;
 using AndreiWeb.Models;
 using AndreiWeb.Models.ViewModels;
 using AndreiWeb.Utility;
@@ -12,12 +12,12 @@ namespace AndreiWeb.Areas.Admin.Controllers;
 [Area("Admin")]
 [Authorize(Roles = SD.Role_Admin)]
 
-public class ProductController : Controller
+public class CompanyController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+    public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
     {
         _unitOfWork = unitOfWork;
         _webHostEnvironment = webHostEnvironment;
