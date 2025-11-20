@@ -135,7 +135,7 @@ namespace AndreiWeb.Areas.Identity.Pages.Account
             Input = new()
             {
                 RoleList = _roleManager.Roles
-                    .Where(u => u.Name != "Admin")
+                    // .Where(u => u.Name != "Admin")
                     .Select(x => x.Name)
                     .Select(i => new SelectListItem
                     {
