@@ -1,6 +1,7 @@
 using AndreiWeb.DataAccess.Data;
 using AndreiWeb.DataAccess.Repository;
 using AndreiWeb.DataAccess.Repository.IRepository;
+using AndreiWeb.Mappings;
 using AndreiWeb.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
 builder.Services.AddRazorPages();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
